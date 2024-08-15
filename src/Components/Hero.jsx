@@ -1,4 +1,13 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+import "../../node_modules/swiper/swiper.css";
+import "swiper/css/pagination";
+
+import "../style.css";
+
+// import required modules
+import { Pagination } from "swiper/modules";
 import { NavLink } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { AiOutlineUser } from "react-icons/ai";
@@ -102,9 +111,9 @@ const Hero = () => {
               </div>
             </div>
             {/* Page content here */}
-            <div className="hero-background lg:h-[500px] mt-5">
-              <div className="container mx-auto">
-                <div className="bg-white dark:bg-card rounded-lg shadow-md  w-[270px] ">
+            <div className="hero-background bg-cover lg:bg-transparent lg:h-[500px] mt-10 lg:mt-5 border-2 border-red-500">
+              <div className="container mx-auto min-h-[340px] flex justify-between">
+                <div className="bg-white dark:bg-card rounded-lg shadow-md  w-[270px] hidden lg:block">
                   <h2 className="text-lg font-bold bg-primary flex items-center gap-2 text-secondary py-2 px-3 rounded-tr-lg rounded-tl-lg">
                     <IoIosList className="text-2xl " />
                     All Departments
@@ -169,6 +178,25 @@ const Hero = () => {
                     </li>
                   </ul>
                 </div>
+                <div className="lg:w-[80%] w-full border-2 border-blue-600">
+                  <Swiper
+                    pagination={{
+                      dynamicBullets: true,
+                    }}
+                    modules={[Pagination]}
+                    className="mySwiper"
+                  >
+                    <SwiperSlide>Slide 1</SwiperSlide>
+                    <SwiperSlide>Slide 2</SwiperSlide>
+                    <SwiperSlide>Slide 3</SwiperSlide>
+                    <SwiperSlide>Slide 4</SwiperSlide>
+                    <SwiperSlide>Slide 5</SwiperSlide>
+                    <SwiperSlide>Slide 6</SwiperSlide>
+                    <SwiperSlide>Slide 7</SwiperSlide>
+                    <SwiperSlide>Slide 8</SwiperSlide>
+                    <SwiperSlide>Slide 9</SwiperSlide>
+                  </Swiper>
+                </div>
               </div>
             </div>
           </div>
@@ -179,7 +207,71 @@ const Hero = () => {
               className="drawer-overlay"
             ></label>
             <ul className="menu bg-base-200 min-h-full w-80 p-4">
-              {/* Sidebar content here */}
+              <div className="bg-white dark:bg-card rounded-lg shadow-md  w-[270px] ">
+                <h2 className="text-lg font-bold bg-primary flex items-center gap-2 text-secondary py-2 px-3 rounded-tr-lg rounded-tl-lg">
+                  <IoIosList className="text-2xl " />
+                  All Departments
+                </h2>
+                <ul className=" space-y-2 [&>li]:border-b [&>li]:pb-1 p-4">
+                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
+                    Value of the Day
+                  </li>
+                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
+                    Top 100 Offers
+                  </li>
+                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
+                    New Arrivals
+                  </li>
+                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
+                    Computers & Accessories{" "}
+                    <span className="text-muted">
+                      <MdChevronRight className="text-xl  text-gray-300" />
+                    </span>
+                  </li>
+                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
+                    Cameras, Audio & Video{" "}
+                    <span className="text-muted">
+                      <MdChevronRight className="text-xl  text-gray-300" />
+                    </span>
+                  </li>
+                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
+                    Mobiles & Tablets{" "}
+                    <span className="text-muted">
+                      <MdChevronRight className="text-xl  text-gray-300" />
+                    </span>
+                  </li>
+                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
+                    Movies, Music & Video Game{" "}
+                    <span className="text-muted">
+                      <MdChevronRight className="text-xl  text-gray-300" />
+                    </span>
+                  </li>
+                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
+                    TV & Audio{" "}
+                    <span className="text-muted">
+                      <MdChevronRight className="text-xl  text-gray-300" />
+                    </span>
+                  </li>
+                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
+                    Watches & Eyewear{" "}
+                    <span className="text-muted">
+                      <MdChevronRight className="text-xl  text-gray-300" />
+                    </span>
+                  </li>
+                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
+                    Car, Motorbike & Industrial{" "}
+                    <span className="text-muted">
+                      <MdChevronRight className="text-xl  text-gray-300" />
+                    </span>
+                  </li>
+                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
+                    Accessories{" "}
+                    <span className="text-muted">
+                      <MdChevronRight className="text-xl  text-gray-300" />
+                    </span>
+                  </li>
+                </ul>
+              </div>
             </ul>
           </div>
         </div>

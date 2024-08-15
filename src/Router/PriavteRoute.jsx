@@ -7,7 +7,7 @@ const PriavteRoute = ({ children }) => {
   if (!user) {
     return <Navigate to="/login" />;
   }
-  return <div></div>;
+  return children;
 };
 
 export default PriavteRoute;

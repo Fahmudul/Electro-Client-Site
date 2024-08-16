@@ -1,20 +1,12 @@
-import React, { useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
-import "../../node_modules/swiper/swiper.css";
-import "swiper/css/pagination";
-
-import "../style.css";
-
-// import required modules
-import { Pagination } from "swiper/modules";
+import compo from "../assets/compo.png";
+import { IoMenu } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
-import { MdChevronRight } from "react-icons/md";
-import { IoIosList } from "react-icons/io";
 import { Link } from "react-router-dom";
+import AllCategoryList from "./AllCategoryList";
+import SearchBar from "./SearchBar";
 const Hero = () => {
   const currentPath = window.location.pathname;
   const NavItems = [
@@ -49,8 +41,9 @@ const Hero = () => {
                   className={
                     currentPath === item.link
                       ? "text-secondary font-bold"
-                      : "before:[content-'']  before:w-0 relative before:absolute   before:hover:w-[60%] before:transition-all before:duration-500   before:bg-secondary before:h-[2px] before:-bottom-2"
+                      : "before:[content-''] text-secondary before:w-0 relative before:absolute   before:hover:w-[60%] before:transition-all before:duration-500   before:bg-secondary before:h-[2px] before:-bottom-2"
                   }
+                  style={{ textDecoration: "none" }}
                   to={item.link}
                 >
                   {item.name}
@@ -62,7 +55,7 @@ const Hero = () => {
         </div>
       </nav>
       <hr />
-      <div className="">
+      <div className=" my-5">
         <div className="drawer">
           <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content  flex flex-col">
@@ -89,9 +82,12 @@ const Hero = () => {
                   </svg>
                 </label>
               </div>
-              <div className="flex w-full items-center justify-between pr-3">
-                <div className=" flex-1 text-3xl lg:text-5xl font-bold">
-                  electro <span className="text-primary">.</span>
+              <div className="flex w-full items-center justify-between ">
+                <div className=" text-3xl lg:text-5xl font-bold lg:w-[20.5%] flex justify-between items-center lg:pr-8">
+                  <span>
+                    electro<span className="text-primary">.</span>
+                  </span>
+                  <IoMenu />
                 </div>
                 <div className=" flex lg:hidden space-x-2 [&>li]:list-none items-center">
                   <li>
@@ -108,94 +104,9 @@ const Hero = () => {
                     </Link>
                   </li>
                 </div>
-              </div>
-            </div>
-            {/* Page content here */}
-            <div className="hero-background bg-cover lg:bg-transparent lg:h-[500px] mt-10 lg:mt-5 border-2 border-red-500">
-              <div className="container mx-auto min-h-[340px] flex justify-between">
-                <div className="bg-white dark:bg-card rounded-lg shadow-md  w-[270px] hidden lg:block">
-                  <h2 className="text-lg font-bold bg-primary flex items-center gap-2 text-secondary py-2 px-3 rounded-tr-lg rounded-tl-lg">
-                    <IoIosList className="text-2xl " />
-                    All Departments
-                  </h2>
-                  <ul className=" space-y-2 [&>li]:border-b [&>li]:pb-1 p-4">
-                    <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                      Value of the Day
-                    </li>
-                    <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                      Top 100 Offers
-                    </li>
-                    <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                      New Arrivals
-                    </li>
-                    <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                      Computers & Accessories{" "}
-                      <span className="text-muted">
-                        <MdChevronRight className="text-xl  text-gray-300" />
-                      </span>
-                    </li>
-                    <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                      Cameras, Audio & Video{" "}
-                      <span className="text-muted">
-                        <MdChevronRight className="text-xl  text-gray-300" />
-                      </span>
-                    </li>
-                    <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                      Mobiles & Tablets{" "}
-                      <span className="text-muted">
-                        <MdChevronRight className="text-xl  text-gray-300" />
-                      </span>
-                    </li>
-                    <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                      Movies, Music & Video Game{" "}
-                      <span className="text-muted">
-                        <MdChevronRight className="text-xl  text-gray-300" />
-                      </span>
-                    </li>
-                    <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                      TV & Audio{" "}
-                      <span className="text-muted">
-                        <MdChevronRight className="text-xl  text-gray-300" />
-                      </span>
-                    </li>
-                    <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                      Watches & Eyewear{" "}
-                      <span className="text-muted">
-                        <MdChevronRight className="text-xl  text-gray-300" />
-                      </span>
-                    </li>
-                    <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                      Car, Motorbike & Industrial{" "}
-                      <span className="text-muted">
-                        <MdChevronRight className="text-xl  text-gray-300" />
-                      </span>
-                    </li>
-                    <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                      Accessories{" "}
-                      <span className="text-muted">
-                        <MdChevronRight className="text-xl  text-gray-300" />
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="lg:w-[80%] w-full border-2 border-blue-600">
-                  <Swiper
-                    pagination={{
-                      dynamicBullets: true,
-                    }}
-                    modules={[Pagination]}
-                    className="mySwiper"
-                  >
-                    <SwiperSlide>Slide 1</SwiperSlide>
-                    <SwiperSlide>Slide 2</SwiperSlide>
-                    <SwiperSlide>Slide 3</SwiperSlide>
-                    <SwiperSlide>Slide 4</SwiperSlide>
-                    <SwiperSlide>Slide 5</SwiperSlide>
-                    <SwiperSlide>Slide 6</SwiperSlide>
-                    <SwiperSlide>Slide 7</SwiperSlide>
-                    <SwiperSlide>Slide 8</SwiperSlide>
-                    <SwiperSlide>Slide 9</SwiperSlide>
-                  </Swiper>
+                <SearchBar />
+                <div className="ml-4">
+                  <img src={compo} alt="" />
                 </div>
               </div>
             </div>
@@ -207,71 +118,7 @@ const Hero = () => {
               className="drawer-overlay"
             ></label>
             <ul className="menu bg-base-200 min-h-full w-80 p-4">
-              <div className="bg-white dark:bg-card rounded-lg shadow-md  w-[270px] ">
-                <h2 className="text-lg font-bold bg-primary flex items-center gap-2 text-secondary py-2 px-3 rounded-tr-lg rounded-tl-lg">
-                  <IoIosList className="text-2xl " />
-                  All Departments
-                </h2>
-                <ul className=" space-y-2 [&>li]:border-b [&>li]:pb-1 p-4">
-                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                    Value of the Day
-                  </li>
-                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                    Top 100 Offers
-                  </li>
-                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                    New Arrivals
-                  </li>
-                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                    Computers & Accessories{" "}
-                    <span className="text-muted">
-                      <MdChevronRight className="text-xl  text-gray-300" />
-                    </span>
-                  </li>
-                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                    Cameras, Audio & Video{" "}
-                    <span className="text-muted">
-                      <MdChevronRight className="text-xl  text-gray-300" />
-                    </span>
-                  </li>
-                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                    Mobiles & Tablets{" "}
-                    <span className="text-muted">
-                      <MdChevronRight className="text-xl  text-gray-300" />
-                    </span>
-                  </li>
-                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                    Movies, Music & Video Game{" "}
-                    <span className="text-muted">
-                      <MdChevronRight className="text-xl  text-gray-300" />
-                    </span>
-                  </li>
-                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                    TV & Audio{" "}
-                    <span className="text-muted">
-                      <MdChevronRight className="text-xl  text-gray-300" />
-                    </span>
-                  </li>
-                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                    Watches & Eyewear{" "}
-                    <span className="text-muted">
-                      <MdChevronRight className="text-xl  text-gray-300" />
-                    </span>
-                  </li>
-                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                    Car, Motorbike & Industrial{" "}
-                    <span className="text-muted">
-                      <MdChevronRight className="text-xl  text-gray-300" />
-                    </span>
-                  </li>
-                  <li className="text-muted-foreground hover:text-primary cursor-pointer flex items-center justify-between">
-                    Accessories{" "}
-                    <span className="text-muted">
-                      <MdChevronRight className="text-xl  text-gray-300" />
-                    </span>
-                  </li>
-                </ul>
-              </div>
+              <AllCategoryList visible={"lg:hidden"} hidden={" "} />
             </ul>
           </div>
         </div>

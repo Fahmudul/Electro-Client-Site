@@ -5,7 +5,7 @@ import { MdOutlineCompareArrows } from "react-icons/md";
 import img1 from "../assets/img2.jpg";
 import { Link } from "react-router-dom";
 const AllProductCard = ({ product }) => {
-  const { category, description, price, id } = product;
+  const { category, description, price, id, productName } = product;
   return (
     <Link
       to={`/products/${product.id}`}
@@ -20,10 +20,8 @@ const AllProductCard = ({ product }) => {
         />
       </div>
       <div className="p-4">
-        <h2 className="text-lg font-bold #333333">
-          Game Console Controller + USB 3.0 Cable
-        </h2>
-        <p className="text-muted-foreground #666666">Game Consoles</p>
+        <h2 className="text-lg font-bold #333333">{productName}</h2>
+        <p className="text-muted-foreground #666666">{category}</p>
         <p className="text-xl font-semibold #388E3C">${price}</p>
         <p className="text-muted-foreground mt-2">
           {description.slice(0, 100)}...

@@ -11,8 +11,10 @@ import AllProductCard from "../../Components/AllProductCard";
 const AllProductPage = () => {
   const axiosBase = useAxios();
   const [value, setValue] = React.useState([0, 90]);
+  const [sortByValue, setSortByValue] = useState("default"); // sortByValue
+
   const minValue = 150;
-  const maxValue = 1500;
+  const maxValue = 5000;
   const [products, setProducts] = useState([]);
   let brandName = [];
   let categoryName = [];
@@ -21,6 +23,14 @@ const AllProductPage = () => {
     category: [],
     price: [0, 90],
   });
+  const [roomscount, setRoomsCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const Pages = Math.ceil(roomscount / itemsPerPage);
+  const numberOfItemsForButton = Array.from(
+    { length: Pages },
+    (_, index) => index + 1
+  );
   const categories = [
     "Laptop",
     "Mobile",
@@ -63,16 +73,15 @@ const AllProductPage = () => {
   const [visible, setVisible] = useState(true);
   const [bransVisible, setbransVisible] = useState(true);
   useEffect(() => {
-    console.log(filter);
     const debouncedApiCall = debounce(async () => {
       try {
         const filteredProducts = await axiosBase.post(
-          "/filteredproducts",
+          `/filteredproducts/?skip=${currentPage}&limit=${itemsPerPage}`,
           filter
         );
 
-        console.log("Filtered products:", filteredProducts.data);
-        setProducts(filteredProducts.data);
+        setProducts(filteredProducts.data.result);
+        setRoomsCount(filteredProducts?.data?.productArrayLength);
       } catch (error) {
         console.error("Error fetching filtered products:", error);
       }
@@ -83,7 +92,7 @@ const AllProductPage = () => {
 
     // Cleanup function to cancel the debounce if the effect is triggered again
     return () => debouncedApiCall.cancel();
-  }, [filter]);
+  }, [filter, currentPage, itemsPerPage]);
   return (
     <div className="container mx-auto  min-h-[80vh]">
       <div className="grid lg:grid-cols-5 gap-3">
@@ -233,10 +242,79 @@ const AllProductPage = () => {
         </div>
 
         {/* Products */}
-        <div className="col-span-4 grid grid-cols-1 lg:grid-cols-3 gap-3">
-          {products?.map((product) => (
-            <AllProductCard key={product._id} product={product} />
-          ))}
+        <div className="col-span-4 ">
+          <div className="">
+            <div className="py-5 px-3 w-full flex justify-end items-center">
+              <span className="text-lg font-semibold">Sort by</span>
+              <select
+                name="sort by"
+                id=""
+                className=" mr-2 p-2 rounded-xl active:scale-95 border ml-2 text-lg"
+                onChange={(e) => {
+                  setSortByValue(e.target.value);
+                }}
+              >
+                <option value="default">Default</option>
+                <option value="lth">Low to High</option>
+                <option value="htl">High to Low</option>
+                <option value="new">Newest First</option>
+              </select>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+              {products?.map((product) => (
+                <AllProductCard key={product._id} product={product} />
+              ))}
+            </div>
+            {/* Pagination */}
+            <div className="flex justify-center items-center mt-10 overflow-x-auto">
+              <button
+                className="btnColor  mr-2 p-2 rounded-xl active:scale-95"
+                onClick={() => {
+                  if (currentPage > 1) {
+                    setCurrentPage(currentPage - 1);
+                  }
+                }}
+              >
+                Prev
+              </button>
+              {numberOfItemsForButton.map((number, idx) => (
+                <button
+                  key={idx}
+                  className={`btnColor w-8 mr-2 p-2 rounded-xl  active:scale-95 ${
+                    currentPage === number
+                      ? "bg-primary text-white"
+                      : "hover:bg-gray-100"
+                  }`}
+                  onClick={() => setCurrentPage(number)}
+                >
+                  {number}
+                </button>
+              ))}
+              <button
+                className="btnColor  mr-2 p-2 rounded-xl active:scale-95"
+                onClick={() => {
+                  if (currentPage < Pages) {
+                    setCurrentPage(currentPage + 1);
+                  }
+                }}
+              >
+                Next
+              </button>
+              <select
+                name="itemsPerPage"
+                id=""
+                className=" mr-2 p-2 rounded-xl active:scale-95"
+                onChange={(e) => {
+                  setItemsPerPage(e.target.value);
+                  setCurrentPage(1);
+                }}
+              >
+                <option value="8">6</option>
+                <option value="16">16</option>
+                <option value="20">20</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
       <div></div>

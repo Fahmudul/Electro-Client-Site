@@ -31,6 +31,27 @@ const AllProductPage = () => {
     { length: Pages },
     (_, index) => index + 1
   );
+  function filterProducts(products, filterType) {
+    if (filterType === "lth") {
+      // Low to high based on price
+      return products.sort((a, b) => a.price - b.price);
+    } else if (filterType === "htl") {
+      // High to low based on price
+      return products.sort((a, b) => b.price - a.price);
+    } else if (filterType === "new") {
+      // Newest first based on creation date in "DD:MM:YYYY" format
+      return products.sort((a, b) => {
+        const [dayA, monthA, yearA] = a.creationDate.split(":").map(Number);
+        const [dayB, monthB, yearB] = b.creationDate.split(":").map(Number);
+        const dateA = new Date(yearA, monthA - 1, dayA).getTime();
+        const dateB = new Date(yearB, monthB - 1, dayB).getTime();
+        return dateB - dateA;
+      });
+    } else {
+      // Return original array if invalid filterType is provided
+      return products;
+    }
+  }
   const categories = [
     "Laptop",
     "Mobile",

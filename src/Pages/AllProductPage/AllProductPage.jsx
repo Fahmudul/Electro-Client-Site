@@ -7,9 +7,12 @@ import brandList from "./Brand";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import useAxios from "../../hooks/useAxios";
 import { debounce } from "lodash";
+import AllProductCard from "../../Components/AllProductCard";
 const AllProductPage = () => {
   const axiosBase = useAxios();
-  const [value, setValue] = React.useState([0, 1500]);
+  const [value, setValue] = React.useState([0, 90]);
+  const minValue = 150;
+  const maxValue = 1500;
   const [products, setProducts] = useState([]);
   let brandName = [];
   let categoryName = [];
@@ -25,7 +28,16 @@ const AllProductPage = () => {
     "Camera",
     "Audio System",
   ];
-  console.log(filter);
+
+  const normalizeToSliderRange = (price) => {
+    return ((price - minValue) / (maxValue - minValue)) * 100;
+  };
+
+  // Denormalize slider value to real-world price
+  const denormalizeToActualValue = (sliderValue) => {
+    return (sliderValue / 100) * (maxValue - minValue) + minValue;
+  };
+  // console.log(filter);
   const handleCheckboxChange = (Name, property) => {
     // console.log(Name);
     setFilter((prevFilter) => {
@@ -51,6 +63,7 @@ const AllProductPage = () => {
   const [visible, setVisible] = useState(true);
   const [bransVisible, setbransVisible] = useState(true);
   useEffect(() => {
+    console.log(filter);
     const debouncedApiCall = debounce(async () => {
       try {
         const filteredProducts = await axiosBase.post(
@@ -73,7 +86,7 @@ const AllProductPage = () => {
   }, [filter]);
   return (
     <div className="container mx-auto  min-h-[80vh]">
-      <div className="grid lg:grid-cols-5">
+      <div className="grid lg:grid-cols-5 gap-3">
         <div className="[&>div]:shadow-lg">
           {/* Price Range */}
           <div className="p-3 w-full mb-2 bg-[#f5f5f5]">
@@ -83,38 +96,58 @@ const AllProductPage = () => {
                 <RangeSlider
                   progress
                   style={{ width: "100%", backgroundColor: "red" }}
-                  value={value}
-                  onChange={(value) => {
-                    setValue(value);
-                    setFilter({ ...filter, price: value });
+                  value={[
+                    normalizeToSliderRange(filter.price[0]),
+                    normalizeToSliderRange(filter.price[1]),
+                  ]}
+                  onChange={(sliderValue) => {
+                    const actualMinPrice = denormalizeToActualValue(
+                      sliderValue[0]
+                    );
+                    const actualMaxPrice = denormalizeToActualValue(
+                      sliderValue[1]
+                    );
+
+                    setValue(sliderValue);
+                    setFilter({
+                      ...filter,
+                      price: [actualMinPrice, actualMaxPrice],
+                    });
                   }}
                 />
               </Col>
               <Col md={8} xs={12} id="price-range-2">
                 <InputGroup>
                   <InputNumber
-                    min={0}
-                    max={1500}
-                    value={value[0]}
+                    min={150}
+                    value={filter.price[0]}
                     onChange={(nextValue) => {
-                      const [start, end] = value;
-                      if (nextValue > end) {
-                        return;
-                      }
-                      setValue([nextValue, end]);
+                      const [_, end] = filter.price;
+                      if (nextValue > end) return;
+
+                      setFilter({ ...filter, price: [nextValue, end] });
+
+                      setValue([
+                        normalizeToSliderRange(nextValue),
+                        normalizeToSliderRange(end),
+                      ]);
                     }}
                   />
                   <InputGroup.Addon>to</InputGroup.Addon>
                   <InputNumber
-                    min={0}
+                    min={150}
                     max={1500}
-                    value={value[1]}
+                    value={filter.price[1]}
                     onChange={(nextValue) => {
-                      const [start, end] = value;
-                      if (start > nextValue) {
-                        return;
-                      }
-                      setValue([start, nextValue]);
+                      const [start, _] = filter.price;
+                      if (start > nextValue) return;
+
+                      setFilter({ ...filter, price: [start, nextValue] });
+
+                      setValue([
+                        normalizeToSliderRange(start),
+                        normalizeToSliderRange(nextValue),
+                      ]);
                     }}
                   />
                 </InputGroup>
@@ -197,6 +230,13 @@ const AllProductPage = () => {
           </div>
 
           {/* Clear Filter */}
+        </div>
+
+        {/* Products */}
+        <div className="col-span-4 grid grid-cols-1 lg:grid-cols-3 gap-3">
+          {products?.map((product) => (
+            <AllProductCard key={product._id} product={product} />
+          ))}
         </div>
       </div>
       <div></div>

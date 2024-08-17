@@ -3,10 +3,12 @@ import img1 from "../assets/img4.jpg";
 import { FaCartArrowDown } from "react-icons/fa";
 import { MdOutlineCompareArrows } from "react-icons/md";
 import { CiHeart } from "react-icons/ci";
+import { Link } from "react-router-dom";
 const Card = ({ product, height }) => {
-  const { category, description } = product;
+  const { category, description, id } = product;
   return (
-    <div
+    <Link
+      to={`/products/${product.id}`}
       className={`group max-h-[${height}px] border flex px-4 pt-5 pb-6 items-center justify-center hover:shadow-xl rounded-md transition-all duration-300`}
     >
       <div className="flex gap-2 items-center justify-between">
@@ -37,7 +39,7 @@ const Card = ({ product, height }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -5,7 +5,7 @@ import { MdOutlineCompareArrows } from "react-icons/md";
 import { CiHeart } from "react-icons/ci";
 import { Link } from "react-router-dom";
 const Card = ({ product, height }) => {
-  const { category, description, id } = product;
+  const { category, description, id, price } = product;
   return (
     <Link
       to={`/products/${product.id}`}
@@ -25,7 +25,7 @@ const Card = ({ product, height }) => {
             />
           </div>
           <div className="flex justify-between items-center my-1">
-            <span className="text-xl">$79.00</span>
+            <span className="text-xl">${price}</span>
             <FaCartArrowDown className="text-4xl  active:scale-95 transition-all duration-300 cursor-pointer bg-primary text-white p-[7px] rounded-full" />
           </div>
           <hr className="my-3" />

@@ -68,24 +68,27 @@ const AllProductPage = () => {
   const denormalizeToActualValue = (sliderValue) => {
     return (sliderValue / 100) * (maxValue - minValue) + minValue;
   };
-  // console.log(filter);
-  const handleCheckboxChange = (Name, property) => {
-    // console.log(Name);
+  console.log(filter);
+  const handleCheckboxChange = (checked, Name, property) => {
+    console.log(checked);
     setFilter((prevFilter) => {
-      // Check if the brand is already in the list
-      if (prevFilter[property].includes(Name)) {
+      // console.log(prevFilter);
+      if (checked) {
+        console.log("Not in list");
+        // Add the brand to the list
+        return {
+          ...prevFilter,
+          [property]: [...prevFilter[property], Name.toLowerCase()],
+        };
+      } else {
         // Remove the brand from the list
+
+        console.log("Already in list");
         return {
           ...prevFilter,
           [property]: prevFilter[property].filter(
             (brand) => brand !== Name.toLowerCase()
           ),
-        };
-      } else {
-        // Add the brand to the list
-        return {
-          ...prevFilter,
-          [property]: [...prevFilter[property], Name.toLowerCase()],
         };
       }
     });
@@ -106,7 +109,7 @@ const AllProductPage = () => {
       } catch (error) {
         console.error("Error fetching filtered products:", error);
       }
-    }, 300); // Adjust the delay as needed (e.g., 300ms)
+    }, 300);
 
     // Call the debounced function
     debouncedApiCall();
@@ -207,18 +210,26 @@ const AllProductPage = () => {
                   : "hidden"
               }
             >
-              {brandList.map((brand, idx) => (
-                <div key={idx} className="form-control">
-                  <label className="label cursor-pointer">
-                    <span className="label-text text-lg">{brand}</span>
-                    <input
-                      type="checkbox"
-                      className="checkbox"
-                      onClick={() => handleCheckboxChange(brand, "brand")}
-                    />
-                  </label>
-                </div>
-              ))}
+              {brandList.map((brand, idx) => {
+                const isChecked = filter.brand.includes(
+                  brand.toLowerCase().trim()
+                );
+
+                return (
+                  <div key={idx} className="form-control">
+                    <label className="label cursor-pointer">
+                      <span className="label-text text-lg">{brand}</span>
+                      <input
+                        type="checkbox"
+                        className="checkbox"
+                        onChange={(e) =>
+                          handleCheckboxChange(e.target.checked, brand, "brand")
+                        }
+                      />
+                    </label>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -244,18 +255,30 @@ const AllProductPage = () => {
                   : "hidden"
               }
             >
-              {categories.map((category, idx) => (
-                <div key={idx} className="form-control">
-                  <label className="label cursor-pointer">
-                    <span className="label-text text-lg">{category}</span>
-                    <input
-                      type="checkbox"
-                      className="checkbox"
-                      onClick={() => handleCheckboxChange(category, "category")}
-                    />
-                  </label>
-                </div>
-              ))}
+              {categories.map((category, idx) => {
+                const isChecked = filter.category.includes(
+                  category.toLowerCase().trim()
+                );
+                console.log(isChecked);
+                return (
+                  <div key={idx} className="form-control">
+                    <label className="label cursor-pointer">
+                      <span className="label-text text-lg">{category}</span>
+                      <input
+                        type="checkbox"
+                        className="checkbox"
+                        onChange={(e) =>
+                          handleCheckboxChange(
+                            e.target.checked,
+                            category,
+                            "category"
+                          )
+                        }
+                      />
+                    </label>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -273,6 +296,7 @@ const AllProductPage = () => {
                 className=" mr-2 p-2 rounded-xl active:scale-95 border ml-2 text-lg"
                 onChange={(e) => {
                   setSortByValue(e.target.value);
+                  filterProducts(products, e.target.value);
                 }}
               >
                 <option value="default">Default</option>
@@ -286,7 +310,7 @@ const AllProductPage = () => {
                 <AllProductCard key={product._id} product={product} />
               ))}
             </div>
-            {/* Pagination */}
+            {/**Pagination */}
             <div className="flex justify-center items-center mt-10 overflow-x-auto">
               <button
                 className="btnColor  mr-2 p-2 rounded-xl active:scale-95"

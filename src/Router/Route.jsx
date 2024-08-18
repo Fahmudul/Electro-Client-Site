@@ -3,6 +3,7 @@ import Layout from "../Pages/Layout/Layout";
 import Home from "../Pages/Home/Home";
 import AllProductPage from "../Pages/AllProductPage/AllProductPage";
 import ProductDetails from "../Components/ProductDetails";
+import LoginSignUp from "../Pages/LoginSignUp/LoginSignUp";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
         element: <ProductDetails />,
       },
     ],
+  },
+  {
+    path: "/signin-out",
+    element: <LoginSignUp />,
   },
 ]);
 

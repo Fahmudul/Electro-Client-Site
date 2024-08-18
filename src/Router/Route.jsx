@@ -3,7 +3,9 @@ import Layout from "../Pages/Layout/Layout";
 import Home from "../Pages/Home/Home";
 import AllProductPage from "../Pages/AllProductPage/AllProductPage";
 import ProductDetails from "../Components/ProductDetails";
+import PrivateRoute from "../Router/PriavteRoute";
 import LoginSignUp from "../Pages/LoginSignUp/LoginSignUp";
+import Underdevelopment from "../Components/Underdevelopment";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,7 +21,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/products/:id",
-        element: <ProductDetails />,
+        element: (
+          <PrivateRoute>
+            <ProductDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/store-locator",
+        element: <Underdevelopment />,
+      },
+      {
+        path: "/track-your-order",
+        element: <Underdevelopment />,
       },
     ],
   },

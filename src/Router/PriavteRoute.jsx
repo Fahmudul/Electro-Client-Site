@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../Auth/AuthProvider";
-import { Navigate } from "react-router";
+import { Navigate, useLocation } from "react-router";
+import useAuth from "../hooks/useAuth";
 
 const PriavteRoute = ({ children }) => {
-  const { user } = useContext(AuthContext);
+  const location = useLocation();
+
+  const { user } = useAuth();
   if (!user) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/signin-out" state={{ from: location }} replace />;
   }
   return children;
 };

@@ -4,34 +4,36 @@ import { TfiHeadphone } from "react-icons/tfi";
 const Footer = () => {
   return (
     <footer className="mt-20">
-      <div className="flex  items-center gap-4 md:gap-3 md:flex-row lg:gap-10 md:justify-center flex-col bg-[#FED700] py-4 sm:px-16 max-sm:px-8">
-        <div className="flex md:flex-row flex-col gap-2 md:gap-8 items-center">
-          <p className="text-lg flex items-center">
-            <PiTelegramLogoThin className="text-3xl mr-2" /> Sign up to
-            Newsletter
-          </p>
-          <p className="text-[14px]">
-            ...and receive{" "}
-            <span className="font-bold">$20 coupon for first shopping.</span>
-          </p>
+      <div className="flex   items-center gap-4 md:gap-3 md:flex-row l md:justify-center flex-col bg-[#FED700] py-4 sm:px-16 max-sm:px-8">
+        <div className=" flex  lg:gap-8">
+          <div className="flex md:flex-row flex-col gap-2 md:gap-8 items-center ">
+            <p className="text-lg flex items-center">
+              <PiTelegramLogoThin className="text-3xl mr-2" /> Sign up to
+              Newsletter
+            </p>
+            <p className="text-[14px]">
+              ...and receive{" "}
+              <span className="font-bold">$20 coupon for first shopping.</span>
+            </p>
+          </div>
+          <form className=" bg-white pl-5 rounded-full  flex">
+            <input
+              type="email"
+              placeholder="Email address"
+              className="bg-transparent w-full focus:outline-none pr-4 font-semibold border-0 focus:ring-0 px-0 py-0"
+              name="topic"
+            />
+            <button
+              className="flex text-[14px] flex-row items-center justify-center min-w-[130px]  rounded-r-full disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 bg-[#343E48] text-white font-medium tracking-wide border-transparent py-1.5 h-[38px] -mr-3"
+              type="submit"
+            >
+              Sign Up
+            </button>
+          </form>
         </div>
-        <form className=" bg-white pl-5 rounded-full  flex">
-          <input
-            type="email"
-            placeholder="Email address"
-            className="bg-transparent w-full focus:outline-none pr-4 font-semibold border-0 focus:ring-0 px-0 py-0"
-            name="topic"
-          />
-          <button
-            className="flex text-[14px] flex-row items-center justify-center min-w-[130px]  rounded-r-full disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 bg-[#343E48] text-white font-medium tracking-wide border-transparent py-1.5 h-[38px] -mr-3"
-            type="submit"
-          >
-            Sign Up
-          </button>
-        </form>
       </div>
-      <div className="bg-[#F8F8F8] text-[#333E47] py-12 sm:px-16 max-sm:px-8 tracking-wide">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 items-center gap-4">
+      <div className="bg-[#F8F8F8] text-[#333E47] py-12 sm:px-16 max-sm:px-8 tracking-wide ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 items-center gap-4 container mx-auto">
           <div className="lg:col-span-2">
             <h4 className="text-4xl relative font-bold mb-4">
               elctro

@@ -1,13 +1,20 @@
 import compo from "../assets/compo.png";
 import { IoMenu } from "react-icons/io5";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import AllCategoryList from "./AllCategoryList";
 import SearchBar from "./SearchBar";
+import useAuth from "../hooks/useAuth";
+import auth from "../FireBaseConfig/FirebaseConfig";
+import { signOut } from "firebase/auth";
+
 const Hero = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  console.log(user);
   const currentPath = window.location.pathname;
   const NavItems = [
     {
@@ -21,10 +28,6 @@ const Hero = () => {
     {
       name: "Track Your Order",
       link: "/track-your-order",
-    },
-    {
-      name: "Contact Us",
-      link: "/contact-us",
     },
   ];
   return (
@@ -51,7 +54,35 @@ const Hero = () => {
               </li>
             ))}
           </ul>
-          <button className="new-btn font-semibold">Sign In</button>
+          {user ? (
+            <>
+              <div className="avatar">
+                <div className="mask  w-12 rounded-full">
+                  <img
+                    src={
+                      user?.photoURL
+                        ? user?.photoURL
+                        : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    }
+                    title={user?.displayName}
+                  />
+                </div>
+              </div>
+              <button
+                className="new-btn font-semibold"
+                onClick={() => signOut(auth)}
+              >
+                Log Out
+              </button>
+            </>
+          ) : (
+            <button
+              className="new-btn font-semibold"
+              onClick={() => navigate("/signin-out")}
+            >
+              Sign In
+            </button>
+          )}
         </div>
       </nav>
       <hr />

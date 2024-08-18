@@ -3,18 +3,26 @@ import { FaGoogle } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import {
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
+import auth from "../../FireBaseConfig/FirebaseConfig";
+
 const LoginSignUp = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
-  const { SignInWithGoogle, signUp, logIn, UpdateUserProfile } = useAuth();
   const [showLogin, setShowLogin] = React.useState(true); //showLogin
   const handleSignIn = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-
-    logIn(email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
         const user = result.user;
         //
@@ -37,9 +45,11 @@ const LoginSignUp = () => {
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
-    signUp(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
-        UpdateUserProfile(userName)
+        updateProfile(auth.currentUser, {
+          displayName: userName,
+        })
           .then(async (res) => {
             toast.success("User Created Successfully!");
           })
@@ -55,8 +65,9 @@ const LoginSignUp = () => {
 
   // Google Sign In
   const handleGoogleSignIn = () => {
+    const googleProvider = new GoogleAuthProvider();
     // console.log()
-    SignInWithGoogle()
+    signInWithPopup(auth, googleProvider)
       .then((result) => {
         // const user = result.user;
         //
